@@ -84,6 +84,7 @@ The only problem with rake db:seed is that every time you run it, it will reappl
 ```sh
     $ rake db:setup
 ```
+
 Notice no duplicate data entries! For this reason, I highly advise using the setup task rather then seed whenever altering your db/seeds.rb file!
 
 ---
