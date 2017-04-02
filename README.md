@@ -2,7 +2,7 @@
 ###### Building a db in Ruby on Rails using Rake
 ---
 
-#### Installation
+#### Create a rails app
 ```sh
   rails new app
   cd app
@@ -10,65 +10,80 @@
 
 ---
 
-#### Create database
+#### Create a database
 ```sh
   rake db:create
 ```
+Creates new files:
+> db/development.sqlite3
+
+> db/test.sqlite3
+
+These two files hold configurations for a different database environment (development and test)
 
 ---
 
-#### Building the game
+#### Migration
+However, we still need a db/schema.rb file. To create one try:
 ```sh
-    $ gulp build
+  rake db:migrate
 ```
-This will create a directory 'build' containing an artifact for deployment. To test deployment as a served web page:
-```sh
-    $ gulp serve
-```
-Then just go to localhost:3000 in your browser!
+Now that we have a db/schema.rb file and two sqlite3 environments, we can begin to create a database. In order to cover more advance topics we are going to scaffold a small database example to save time.
 
 ---
 
-#### Deployment
-In order to deploy, you must first have correct access rights to the cse3901-osu-2017sp-1350/proj5-diamonds-deploy.git repository. Please contact Diamonds on Driveways team members for details.
-
-To deploy use this command:
+#### Rails Scaffolding
 ```sh
-    $ gulp deploy
+    $ rails generate scaffold Employees name:string ssn:string department:string salary:integer
+    $ rails server
 ```
-This command will deploy the 'build' directory to this [GitHub Page]
-
-###### Important Deployment Information:
-This GitHub page is hosted from a public repository (you cannot host GitHub pages from private repositories). In order to prevent other students from copying our code we took several safety precautions. First, we concatenated html, javascript, and css into index.html, app.bundle.js and app.css respectively in order to prevent our directory structure and code management from being compromised. To further prevent exposure, we uglified and minified our javascript and css to prevent students from easily being able to understand our code. If deploying, we politely ask that all uglification and minification be enabled in the Gulpfile (not commented out).
+To visit this database go to localhost:3000/employees in your browser! You can update the database from here, any changes, once submitted, will immediately log a sql query in the terminal.
 
 ---
-#### Game Features
 
-###### New Game
-Restarts the application without closing the window
+#### Seeding
+Once the app is running you can easily update the database from the UI and all changes will have be saved. However if you need to add many people at once, continuously adding them through the UI can be tedious. Luckily we can use rake db:seed to migrate many values at once.
 
-###### Rules
-Displays the game rules
+Copy the contents below into your db/seeds.rb file
+```sh
+Employee.create([
+  {
+    name: 'Sean Miller',
+    ssn: '123456789',
+    department: 'Accounting',
+    salary: '89000'
+  },
+  {
+    name: 'Cameron Zengel',
+    ssn: '123456790',
+    department: 'Human Resources',
+    salary: '66000'
+  },
+  {
+    name: 'Brutus Buckeye',
+    ssn: '123456791',
+    department: 'Executive Board',
+    salary: '120000'
+  }
+])
 
-###### Hint
-Provides an alert with a small detailed hint that either:
-* Tells you how many sets are on the board
-* Shows you a single card that is involved in a set
-* Shows you all three cards in a set
-* Says there are no sets on the board
+```
 
-###### Rearrange
-Rearranges the cards on board, might make it easier to find cards on the board
+Now create a migration, then migrate the changes by running:
+```sh
+  $ rake db:seed
+  $ rake db:migrate
+  $ rails server
+```
 
-###### Shuffle
-Shuffles cards on the board back into the deck and places 12 random cards on the board from the deck. In case there are no sets on the board, shuffle allows you to continue playing without having to start a new game
+Notice the changes from your seeds file were applied to the database at localhost:3000/employees
+---
 
-###### Settings
-Allows you to edit the following Settings
-* Audio/Background music (music by Tanner Helland)
-* Background Color of the display
+#### Setup
+The only problem with rake db:seed is that every time you run it, it will reapply all changes. This will cause duplicate database entrities if you don't update your db/seeds.rb file correctly. Luckily, rake comes equipped with a setup command, that will reload the database entirely then run rake db:seed
+```sh
+    $ rake db:setup
+```
+Notice no duplicate data entries! For this reason, I highly advise using the setup task rather then seed whenever altering your db/seeds.rb file!
 
-[Game of Set]: <http://www.setgame.com/sites/default/files/instructions/SET%20INSTRUCTIONS%20-%20ENGLISH.pdf>
-[GitHub Page]: <https://cse3901-osu-2017sp-1350.github.io/proj5-diamonds-deploy>
-
-![Create](/md-images/create.png)
+---
