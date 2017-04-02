@@ -77,6 +77,7 @@ Now create a migration, then migrate the changes by running:
 ```
 
 Notice the changes from your seeds file were applied to the database at localhost:3000/employees
+
 ---
 
 #### Setup
