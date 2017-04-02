@@ -35,6 +35,7 @@ Now that we have a db/schema.rb file and two sqlite3 environments, we can begin 
 #### Rails Scaffolding
 ```sh
     $ rails generate scaffold Employees name:string ssn:string department:string salary:integer
+    $ rake db:migrate
     $ rails server
 ```
 To visit this database go to localhost:3000/employees in your browser! You can update the database from here, any changes, once submitted, will immediately log a sql query in the terminal.
@@ -89,3 +90,10 @@ The only problem with rake db:seed is that every time you run it, it will reappl
 Notice no duplicate data entries! For this reason, I highly advise using the setup task rather then seed whenever altering your db/seeds.rb file!
 
 ---
+
+#### Dropping a database
+
+If you don't like the data in your database and want to get rid of it completely, try dropping the database
+```sh
+  rake db:drop
+```
