@@ -34,9 +34,9 @@ Now that we have a db/schema.rb file and two sqlite3 environments, we can begin 
 
 #### Rails Scaffolding
 ```sh
-    $ rails generate scaffold Employees name:string ssn:string department:string salary:integer
-    $ rake db:migrate
-    $ rails server
+  $ rails generate scaffold Employees name:string ssn:string department:string salary:integer
+  $ rake db:migrate
+  $ rails server
 ```
 To visit this database go to localhost:3000/employees in your browser! You can update the database from here, any changes, once submitted, will immediately log a sql query in the terminal.
 
@@ -84,7 +84,7 @@ Notice the changes from your seeds file were applied to the database at localhos
 #### Setup
 The only problem with rake db:seed is that every time you run it, it will reapply all changes. This will cause duplicate database entrities if you don't update your db/seeds.rb file correctly. Luckily, rake comes equipped with a setup command, that will reload the database entirely then run rake db:seed
 ```sh
-    $ rake db:setup
+  $ rake db:setup
 ```
 
 Notice no duplicate data entries! For this reason, I highly advise using the setup task rather then seed whenever altering your db/seeds.rb file!
@@ -146,4 +146,4 @@ After creating your migration, make sure to migrate it:
   $ rake db:migrate
 ```
 
-Now you can check your changes to db/schema.rb 
+Now you can check your changes to db/schema.rb
