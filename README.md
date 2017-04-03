@@ -4,15 +4,15 @@
 
 #### Create a rails app
 ```sh
-  rails new app
-  cd app
+  $ rails new app
+  $ cd app
 ```
 
 ---
 
 #### Create a database
 ```sh
-  rake db:create
+  $ rake db:create
 ```
 Creates new files:
 > db/development.sqlite3
@@ -23,10 +23,10 @@ These two files hold configurations for a different database environment (develo
 
 ---
 
-#### Migration
+#### Migrating
 However, we still need a db/schema.rb file. To create one try:
 ```sh
-  rake db:migrate
+  $ rake db:migrate
 ```
 Now that we have a db/schema.rb file and two sqlite3 environments, we can begin to create a database. In order to cover more advance topics we are going to scaffold a small database example to save time.
 
@@ -49,13 +49,13 @@ Copy the contents below into your db/seeds.rb file
 ```sh
 Employee.create([
   {
-    name: 'Sean Miller',
+    name: 'John Doe',
     ssn: '123456789',
     department: 'Accounting',
     salary: '89000'
   },
   {
-    name: 'Cameron Zengel',
+    name: 'Foobar Guy',
     ssn: '123456790',
     department: 'Human Resources',
     salary: '66000'
@@ -95,5 +95,55 @@ Notice no duplicate data entries! For this reason, I highly advise using the set
 
 If you don't like the data in your database and want to get rid of it completely, try dropping the database
 ```sh
-  rake db:drop
+  $ rake db:drop
 ```
+
+---
+
+#### Versioning
+
+When making a larger database, version control can help you maintain a log of changes in your databse, to push to the next version use:
+```sh
+  $ rake db:forward
+```
+
+---
+
+#### Generating a Migration
+Generating a new migration creates a new migration in the db/migrate folder that you can edit then migrate. Note, migrations are done in the order they are created. You cannot get rid of a migration, rather you must create a new migration to get rid of the old one.
+```sh
+  $ rails generate migration NewCustomMigration
+```
+
+It will create a file that looks like this:
+```sh
+class NewCustomMigration < ActiveRecord::Migration[5.0]
+  def change
+  end
+end
+```
+
+Now you can write your migration in this class:
+```sh
+class NewCustomMigration < ActiveRecord::Migration[5.0]
+  def change
+    create_table :products do |t|
+      t.string :name
+      t.text :description
+      t.timestamps
+    end
+  end
+end
+```
+###### Other commands include:
+* add_cloumn
+* add_reference
+* create_join_tale
+* many more
+
+After creating your migration, make sure to migrate it:
+```sh
+  $ rake db:migrate
+```
+
+Now you can check your changes to db/schema.rb 
