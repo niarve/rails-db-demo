@@ -1,5 +1,6 @@
-# Rake Demo CSE3901
-###### Building a db in Ruby on Rails using Rake
+# Rake Demo for CSE3901
+###### Class Demo for Web Apps CSE3901 presented to class, please follow README for entire Demo
+###### Building a Ruby on Rails database using Rake
 ---
 
 #### Create a rails app
